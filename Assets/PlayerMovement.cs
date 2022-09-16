@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
 {
     public float forwardsForce = 40f;
     public float sidewaysForce = 40f;
+    public float decelerationMultiplier = 0.5f;
     public Rigidbody rb;
 
     // Update is called once per frame
@@ -19,17 +20,20 @@ public class PlayerMovement : MonoBehaviour
         {
             rb.AddForce(0, 0, forwardsForce * Time.deltaTime, ForceMode.VelocityChange);
         }
-        if (Input.GetKey(KeyCode.S))
+        else if (Input.GetKey(KeyCode.S))
         {
             rb.AddForce(0, 0, -forwardsForce * Time.deltaTime, ForceMode.VelocityChange);
         }
-        if (Input.GetKey(KeyCode.A))
+        else if (Input.GetKey(KeyCode.A))
         {
             rb.AddForce(-sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
         }
-        if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D))
         {
             rb.AddForce(sidewaysForce * Time.deltaTime, 0, 0, ForceMode.VelocityChange);
+        }
+        else {
+            rb.AddForce(-rb.velocity * decelerationMultiplier, ForceMode.Acceleration);
         }
     }
 }
